@@ -197,10 +197,10 @@ describe('Recipes', function() {
   //  2. inspect response object and prove it has right
   //  status code and that the returned object has an `id`
   it('should add an item on POST', function() {
-    const newItem = {name: 'lemonade', ingredients: 'water, lemon, sugar'};
+    const newRecipe = {name: 'lemonade', ingredients: ['water, lemon, sugar']};
     return chai.request(app)
       .post('/recipes')
-      .send(newItem)
+      .send(newRecipe)
       .then(function(res) {
         expect(res).to.have.status(201);
         expect(res).to.be.json;
@@ -209,7 +209,7 @@ describe('Recipes', function() {
         expect(res.body.id).to.not.equal(null);
         // response should be deep equal to `newItem` from above if we assign
         // `id` to it from `res.body.id`
-        expect(res.body).to.deep.equal(Object.assign(newItem, {id: res.body.id}));
+        expect(res.body).to.deep.equal(Object.assign(newRecipe, {id: res.body.id}));
       });
   });
 
@@ -227,7 +227,7 @@ describe('Recipes', function() {
     // we can make a second, PUT call to the app.
     const updateData = {
       name: 'coffee',
-      ingredients: 'water, coffee'
+      ingredients: ['water, coffee']
     };
 
     return chai.request(app)
